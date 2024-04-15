@@ -1,4 +1,4 @@
-import {findAllBlogs} from "../../repositories/blogs/blogsRepository";
+import {findAllBlogs} from "../../repositories/blogs/blogsMongoRepository";
 
 export const getAllBlogs = (req: any, res: any) => {
     const db = findAllBlogs()
