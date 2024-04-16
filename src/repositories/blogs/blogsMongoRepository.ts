@@ -32,9 +32,13 @@ export const createBlog = async (req: Request) => {
 
 
 export const findBlogById = async (id: string) => {
-    const blog = await blogCollection.findOne({_id: new ObjectId(id)})
-    console.log(blog)
-    return mapToOutput(blog)
+    try {
+        const blog = await blogCollection.findOne({_id: new ObjectId(id)})
+        console.log(blog)
+        return mapToOutput(blog)
+    } catch (err) {
+        return false
+    }
 }
 
 export const editBlog = async (id: string, body: any) => {
