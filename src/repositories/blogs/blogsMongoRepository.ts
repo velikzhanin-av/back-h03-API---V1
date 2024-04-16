@@ -59,8 +59,8 @@ export const editBlog = async (id: string, body: any) => {
 
 export const deleteBlog = async (id: string) => {
     try {
-        await blogCollection.deleteOne({_id: new ObjectId(id)})
-        return true
+        const res = await blogCollection.deleteOne({_id: new ObjectId(id)})
+        return res.deletedCount !== 0;
     } catch (err) {
         console.log(err)
         return false
