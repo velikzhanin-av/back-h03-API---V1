@@ -1,6 +1,17 @@
 import {blogCollection} from "../../db/mongoDb";
 import {Request} from "express";
-import {BlogDbType} from "../../db/dbTypes";
+import {ObjectId} from "mongodb";
+
+const mapToOutput = (blog: any) => {
+    return {
+        id: blog._id.toString(),
+        name: blog.name,
+        description: blog.description,
+        websiteUrl: blog.websiteUrl,
+        createdAt: blog.createdAt,
+        isMembership: blog.isMembership
+    }
+}
 
 export const findAllBlogs = async () => {
     return await blogCollection.find().toArray()
@@ -12,19 +23,42 @@ export const createBlog = async (req: Request) => {
         description: req.body.description,
         websiteUrl: req.body.websiteUrl,
         createdAt: new Date().toISOString(),
-        isMembership: true
+        isMembership: false
     }
     let result = await blogCollection.insertOne(newBlog)
     return mapToOutput(newBlog)
 }
 
-const mapToOutput = (blog: any) => {
-    return {
-        id: blog._id.toString(),
-        name: blog.name,
-        description: blog.description,
-        websiteUrl: blog.websiteUrl,
-        createdAt: blog.createdAt,
-        isMembership: blog.isMembership
+
+
+export const findBlogById = async (id: string) => {
+    const blog = await blogCollection.findOne({_id: new ObjectId(id)})
+    console.log(blog)
+    return mapToOutput(blog)
+}
+
+export const editBlog = async (id: string, body: any) => {
+    try {
+        await blogCollection.updateOne({_id: new ObjectId(id)}, {
+            $set: {
+                name: body.name,
+                description: body.description,
+                websiteUrl: body.websiteUrl
+            }
+        })
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
+export const deleteBlog = async (id: string) => {
+    try {
+        await blogCollection.deleteOne({_id: new ObjectId(id)})
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
     }
 }

@@ -1,7 +1,8 @@
 import {findAllBlogs} from "../../repositories/blogs/blogsMongoRepository";
+import {Request, Response} from "express";
 
-export const getAllBlogs = (req: any, res: any) => {
-    const db = findAllBlogs()
+export const getAllBlogs = async (req: Request, res: Response) => {
+    const db = await findAllBlogs()
     res
         .status(200)
         .json(db)

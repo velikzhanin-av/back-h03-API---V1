@@ -1,8 +1,8 @@
 import {Request, Response} from "express"
-import {findBlogById} from "../../repositories/blogs/blogsRepository";
+import {findBlogById} from "../../repositories/blogs/blogsMongoRepository";
 
-export const getBlogById = (req: Request, res: Response) => {
-    const blog =  findBlogById(req.params.id)
+export const getBlogById = async (req: Request, res: Response) => {
+    const blog = await findBlogById(req.params.id)
     if (!blog) {
         res
             .sendStatus(404)
