@@ -1,8 +1,8 @@
 import {createBlog} from "../../repositories/blogs/blogsMongoRepository";
 import {Request, Response} from "express";
 
-export const postBlog = (req: Request, res: Response) => {
-    let result = createBlog(req)
+export const postBlog = async (req: Request, res: Response) => {
+    let result = await createBlog(req)
     console.log(result)
     res
         .status(201)
