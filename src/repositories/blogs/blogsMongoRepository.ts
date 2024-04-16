@@ -43,14 +43,14 @@ export const findBlogById = async (id: string) => {
 
 export const editBlog = async (id: string, body: any) => {
     try {
-        await blogCollection.updateOne({_id: new ObjectId(id)}, {
+        const res = await blogCollection.updateOne({_id: new ObjectId(id)}, {
             $set: {
                 name: body.name,
                 description: body.description,
                 websiteUrl: body.websiteUrl
             }
         })
-        return true
+        return res.matchedCount !==0
     } catch (err) {
         console.log(err)
         return false
@@ -60,7 +60,7 @@ export const editBlog = async (id: string, body: any) => {
 export const deleteBlog = async (id: string) => {
     try {
         const res = await blogCollection.deleteOne({_id: new ObjectId(id)})
-        return res.deletedCount !== 0;
+        return res.deletedCount !== 0
     } catch (err) {
         console.log(err)
         return false
