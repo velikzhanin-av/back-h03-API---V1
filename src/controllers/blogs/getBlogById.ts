@@ -6,6 +6,7 @@ export const getBlogById = async (req: Request, res: Response) => {
     if (!blog) {
         res
             .sendStatus(404)
+        return
     }
     res
         .status(200)
