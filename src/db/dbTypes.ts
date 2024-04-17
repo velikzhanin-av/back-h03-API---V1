@@ -26,3 +26,12 @@ export type PostDbType = {
     blogName: string,
     createdAt: string
 }
+
+export type PostDbTypeWithoutId = {
+    title: string,
+    shortDescription: string,
+    content: string,
+    blogId: string,
+    blogName: string,
+    createdAt: string
+}

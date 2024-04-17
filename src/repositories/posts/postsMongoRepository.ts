@@ -1,6 +1,8 @@
-import {postCollection} from "../../db/mongoDb";
+import {blogCollection, postCollection} from "../../db/mongoDb";
 import {ObjectId} from "mongodb";
 import {PostDbType} from "../../db/dbTypes";
+import {db} from "../../db/db";
+import {Request} from "express";
 
 const mapToOutput = (post: PostDbType) => {
     return {
@@ -19,4 +21,19 @@ export const findAllPosts = async () => {
     return res.map((post: PostDbType) => {
         return mapToOutput(post)
     })
+}
+
+export const createPost = async (req: Request) => {
+    const newPost =
+        {
+            title: req.body.title,
+            shortDescription: req.body.shortDescription,
+            content: req.body.content,
+            blogId: req.body.blogId,
+            blogName: "string",
+            createdAt: new Date().toISOString()
+        }
+    let result = await postCollection.insertOne(newPost)
+    console.log(newPost)
+    return mapToOutput(newPost)
 }

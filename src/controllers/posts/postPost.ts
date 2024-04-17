@@ -1,8 +1,8 @@
-import {createPost} from "../../repositories/posts/postsRepository";
+import {createPost} from "../../repositories/posts/postsMongoRepository";
 import {Request, Response} from "express";
 
-export const postPost = (req: Request, res: Response) => {
-    const newPost = createPost(req.body)
+export const postPost = async (req: Request, res: Response) => {
+    const newPost = await createPost(req)
     res
         .status(201)
         .json(newPost)
