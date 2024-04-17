@@ -1,6 +1,7 @@
 import {blogCollection} from "../../db/mongoDb";
 import {Request} from "express";
 import {ObjectId} from "mongodb";
+import {BlogDbType} from "../../db/dbTypes";
 
 const mapToOutput = (blog: any) => {
     return {
@@ -14,7 +15,10 @@ const mapToOutput = (blog: any) => {
 }
 
 export const findAllBlogs = async () => {
-    return await blogCollection.find().toArray()
+    let res = await blogCollection.find().toArray()
+    return res.map((blog: BlogDbType) => {
+        return mapToOutput(blog)
+    })
 }
 
 export const createBlog = async (req: Request) => {
