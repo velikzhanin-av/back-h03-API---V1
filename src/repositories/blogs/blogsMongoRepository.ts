@@ -33,8 +33,6 @@ export const createBlog = async (req: Request) => {
     return mapToOutput(newBlog)
 }
 
-
-
 export const findBlogById = async (id: string) => {
     try {
         const blog = await blogCollection.findOne({_id: new ObjectId(id)})
