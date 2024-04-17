@@ -46,3 +46,20 @@ export const findPostById = async (id: string) => {
         return false
     }
 }
+
+export const editPost = async (id: string, body: any) => {
+    try {
+        const res = await postCollection.updateOne({_id: new ObjectId(id)}, {
+            $set: {
+                title: body.title,
+                shortDescription: body.shortDescription,
+                content: body.content,
+                blogId: body.blogId
+            }
+        })
+        return res.matchedCount !==0
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
