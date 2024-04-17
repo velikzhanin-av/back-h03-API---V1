@@ -4,7 +4,7 @@ import {PostDbType} from "../../db/dbTypes";
 import {db} from "../../db/db";
 import {Request} from "express";
 
-const mapToOutput = (post: PostDbType) => {
+const mapToOutput = (post: any) => {  //проверить позже с типом
     return {
         id: post._id.toString(),
         title: post.title,
@@ -34,6 +34,15 @@ export const createPost = async (req: Request) => {
             createdAt: new Date().toISOString()
         }
     let result = await postCollection.insertOne(newPost)
-    console.log(newPost)
+    console.log(newPost) // проверить позже
     return mapToOutput(newPost)
+}
+
+export const findPostById = async (id: string) => {
+    try {
+        const post = await postCollection.findOne({_id: new ObjectId(id)})
+        return mapToOutput(post)
+    } catch (err) {
+        return false
+    }
 }

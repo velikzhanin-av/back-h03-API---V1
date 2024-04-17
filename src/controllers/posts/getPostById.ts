@@ -1,8 +1,8 @@
 import {Request, Response} from "express"
-import {findPostById} from "../../repositories/posts/postsRepository";
+import {findPostById} from "../../repositories/posts/postsMongoRepository";
 
-export const getPostById = (req: Request, res: Response) => {
-    const post = findPostById(req.params.id)
+export const getPostById = async (req: Request, res: Response) => {
+    const post = await findPostById(req.params.id)
     if (!post) {
         res
             .sendStatus(404)
