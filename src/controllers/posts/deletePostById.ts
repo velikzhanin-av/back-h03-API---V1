@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
-import {deletePost} from "../../repositories/posts/postsRepository";
+import {deletePost} from "../../repositories/posts/postsMongoRepository";
 
-export const deletePostById = (req: Request, res: Response) => {
-    const result = deletePost(req.params.id)
+export const deletePostById = async (req: Request, res: Response) => {
+    const result = await deletePost(req.params.id)
     if (!result) {
         res.sendStatus(404)
     } else {res.sendStatus(204)}

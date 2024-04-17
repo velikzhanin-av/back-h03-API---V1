@@ -63,3 +63,13 @@ export const editPost = async (id: string, body: any) => {
         return false
     }
 }
+
+export const deletePost = async (id: string) => {
+    try {
+        const res = await postCollection.deleteOne({_id: new ObjectId(id)})
+        return res.deletedCount !== 0
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
